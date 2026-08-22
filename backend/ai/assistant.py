@@ -16,8 +16,8 @@ USE_LOCAL_AI = os.getenv("USE_LOCAL_AI", "false").lower() == "true"
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
 
 try:
-    import anthropic
-    _client = anthropic.Anthropic()
+from groq import Groq
+_client = Groq()  # reads GROQ_API_KEY from environment
     _cloud_available = True
 except Exception:
     _cloud_available = False
