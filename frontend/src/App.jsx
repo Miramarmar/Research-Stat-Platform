@@ -81,3 +81,8 @@ export default function App() {
     </div>
   );
 }
+useEffect(() => {
+  const ping = () => fetch(`${process.env.REACT_APP_API_URL}/health`);
+  const id = setInterval(ping, 14 * 60 * 1000);
+  return () => clearInterval(id);
+}, []);
