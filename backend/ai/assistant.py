@@ -36,12 +36,13 @@ def _call_ai(prompt: str, max_tokens: int = 300) -> str:
             return f"Local AI error: {e}"
     if _cloud_available:
         try:
-            msg = _client.messages.create(
-                model="claude-sonnet-4-6",
-                max_tokens=max_tokens,
-                messages=[{"role": "user", "content": prompt}],
-            )
-            return msg.content[0].text
+         # NEW (Groq)
+    chat = _client.chat.completions.create(
+        model="llama-3.1-8b-instant",   # fast, free, very capable
+        max_tokens=max_tokens,
+        messages=[{"role": "user", "content": prompt}],
+    )
+    return chat.choices[0].message.content
         except Exception as e:
             return f"Cloud AI error: {e}"
     return "AI unavailable — set ANTHROPIC_API_KEY or enable USE_LOCAL_AI."
